@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Loader2, Code2, Paintbrush, Eye } from 'lucide-react';
+import { Loader2, Code2, Paintbrush, Eye, Smartphone, Tablet, Monitor } from 'lucide-react';
 
 export default function Home() {
   const [inputCode, setInputCode] = useState('');
@@ -9,6 +9,16 @@ export default function Home() {
   const [cssOnly, setCssOnly] = useState('');
   const [loading, setLoading] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
+  const [previewSize, setPreviewSize] = useState('desktop');
+
+  const getPreviewWidth = () => {
+    switch (previewSize) {
+      case 'mobile': return '320px';
+      case 'tablet': return '768px';
+      case 'desktop': return '100%';
+      default: return '100%';
+    }
+  };
 
   const PreviewFrame = ({ code, title }) => {
     const iframeRef = useState(null);
@@ -25,12 +35,43 @@ export default function Home() {
 
     return (
       <div className="space-y-2">
-        <h3 className="text-lg font-semibold">{title}</h3>
-        <iframe
-          ref={iframeRef}
-          className="w-full h-[300px] bg-white rounded-lg border border-gray-700"
-          title={title}
-        />
+        <div className="flex justify-between items-center">
+          <h3 className="text-lg font-semibold">{title}</h3>
+          {title === "Styled" && (
+            <div className="flex space-x-2">
+              <button
+                onClick={() => setPreviewSize('mobile')}
+                className={`p-2 rounded ${previewSize === 'mobile' ? 'bg-blue-500' : 'bg-gray-700'}`}
+                title="Mobile view"
+              >
+                <Smartphone className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => setPreviewSize('tablet')}
+                className={`p-2 rounded ${previewSize === 'tablet' ? 'bg-blue-500' : 'bg-gray-700'}`}
+                title="Tablet view"
+              >
+                <Tablet className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => setPreviewSize('desktop')}
+                className={`p-2 rounded ${previewSize === 'desktop' ? 'bg-blue-500' : 'bg-gray-700'}`}
+                title="Desktop view"
+              >
+                <Monitor className="w-4 h-4" />
+              </button>
+            </div>
+          )}
+        </div>
+        <div className="w-full overflow-auto bg-white rounded-lg border border-gray-700" style={{ maxWidth: '100%' }}>
+          <div style={{ width: title === "Styled" ? getPreviewWidth() : '100%', transition: 'width 0.3s ease' }}>
+            <iframe
+              ref={iframeRef}
+              className="w-full h-[500px]"
+              title={title}
+            />
+          </div>
+        </div>
       </div>
     );
   };
@@ -61,10 +102,20 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white p-4">
-      <div className="max-w-6xl mx-auto">
-        {/* ... (header section remains the same) ... */}
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-12 pt-8">
+          <div className="flex items-center justify-center mb-4">
+            <Code2 className="w-12 h-12 text-blue-400 mr-4" />
+            <h1 className="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-teal-400">
+              AI Code Styler
+            </h1>
+          </div>
+          <p className="text-gray-400 text-xl">
+            Transform your HTML with responsive, cross-browser compatible CSS
+          </p>
+        </div>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid lg:grid-cols-2 gap-8">
           <div className="space-y-4">
             <div className="flex items-center mb-2">
               <Code2 className="w-5 h-5 text-blue-400 mr-2" />
@@ -128,14 +179,12 @@ export default function Home() {
               <Eye className="w-6 h-6 text-purple-400 mr-2" />
               <h2 className="text-2xl font-semibold">Live Preview</h2>
             </div>
-            <div className="grid md:grid-cols-2 gap-8">
+            <div className="grid lg:grid-cols-2 gap-8">
               <PreviewFrame code={inputCode} title="Original" />
               <PreviewFrame code={outputCode} title="Styled" />
             </div>
           </div>
         )}
-
-        {/* ... (How It Works section remains the same) ... */}
       </div>
     </main>
   );
