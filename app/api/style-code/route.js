@@ -26,7 +26,9 @@ export async function POST(req) {
 8. Response should start with <style> and end with </style>
 9. Do not include any explanation or markdown formatting - just the CSS code
 10. Add amazing colors
-11. Make sure all the elements like navbar is done properly and there is a nice color transitions for different sections`
+11. Make sure all the elements like navbar is done properly and there is a nice color transitions for different sections
+12. The navbar on larger screen should display items in a row and rest to show hamburger bar which upon pressing should show items
+13. The navbar should display the items correctly`
         },
         {
           role: "user",
