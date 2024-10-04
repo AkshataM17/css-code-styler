@@ -24,7 +24,9 @@ export async function POST(req) {
 6. Include necessary media queries for different screen sizes
 7. Add any necessary vendor prefixes for broader browser support
 8. Response should start with <style> and end with </style>
-9. Do not include any explanation or markdown formatting - just the CSS code`
+9. Do not include any explanation or markdown formatting - just the CSS code
+10. Add amazing colors
+11. Make sure all the elements like navbar is done properly and there is a nice color transitions for different sections`
         },
         {
           role: "user",
