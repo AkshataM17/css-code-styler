@@ -1,37 +1,22 @@
 'use client';
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, memo } from 'react';
 import { Loader2, Code2, Paintbrush, Eye, Smartphone, Tablet, Monitor, ArrowLeft, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Highlight from 'react-highlight';
 import 'highlight.js/styles/github.css';
 import { debounce } from 'lodash';  
 
-export default function Home() {
-  const [inputCode, setInputCode] = useState('');
-  const [designDescription, setDesignDescription] = useState('');
-  const [outputCode, setOutputCode] = useState('');
-  const [cssOnly, setCssOnly] = useState('');
-  const [previousCss, setPreviousCss] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [activeTab, setActiveTab] = useState('css');
-  const [previewSize, setPreviewSize] = useState('desktop');
-  const [isGenerated, setIsGenerated] = useState(false);
-  const [changeSummary, setChangeSummary] = useState('');
-  const [showFloatingInput, setShowFloatingInput] = useState(false);
-  const [floatingInput, setFloatingInput] = useState('');
-  const [previewKey, setPreviewKey] = useState(0);
+const PreviewFrame = memo(({ code, previewSize, previewKey }) => {
+  const iframeRef = React.useRef(null);
 
-  useEffect(() => {
-    const handleKeyPress = () => {
-      setPreviewKey(prevKey => prevKey + 1);
-    };
-
-    window.addEventListener('keydown', handleKeyPress);
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyPress);
-    };
-  }, []);
+  React.useEffect(() => {
+    if (iframeRef.current) {
+      const document = iframeRef.current.contentDocument;
+      document.open();
+      document.write(code);
+      document.close();
+    }
+  }, [code]);
 
   const getPreviewWidth = () => {
     switch (previewSize) {
@@ -42,29 +27,33 @@ export default function Home() {
     }
   };
 
-  const PreviewFrame = useCallback(({ code }) => {
-    const iframeRef = useCallback(node => {
-      if (node !== null) {
-        const document = node.contentDocument;
-        document.open();
-        document.write(code);
-        document.close();
-      }
-    }, [code]);
-
-    return (
-      <div className="w-full overflow-hidden bg-white rounded-lg shadow-md" style={{ maxWidth: '100%' }}>
-        <div style={{ width: getPreviewWidth(), transition: 'width 0.3s ease' }}>
-          <iframe
-            key={previewKey}
-            ref={iframeRef}
-            className="w-full h-[500px]"
-            title="Preview"
-          />
-        </div>
+  return (
+    <div className="w-full overflow-hidden bg-white rounded-lg shadow-md" style={{ maxWidth: '100%' }}>
+      <div style={{ width: getPreviewWidth(), transition: 'width 0.3s ease' }}>
+        <iframe
+          key={previewKey}
+          ref={iframeRef}
+          className="w-full h-[500px]"
+          title="Preview"
+        />
       </div>
-    );
-  }, [getPreviewWidth, previewKey]);
+    </div>
+  );
+});
+
+PreviewFrame.displayName = 'PreviewFrame';
+
+export default function Home() {
+  const [inputCode, setInputCode] = useState('');
+  const [designDescription, setDesignDescription] = useState('');
+  const [outputCode, setOutputCode] = useState('');
+  const [cssOnly, setCssOnly] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState('css');
+  const [previewSize, setPreviewSize] = useState('desktop');
+  const [isGenerated, setIsGenerated] = useState(false);
+  const [floatingInput, setFloatingInput] = useState('');
+  const [previewKey, setPreviewKey] = useState(0);
 
   const handleSubmit = async (e) => {
     if (e) e.preventDefault();
@@ -113,7 +102,7 @@ export default function Home() {
   const handleFloatingSubmit = async () => {
     setLoading(true);
     try {
-      const response = await fetch('/api/update-style', {
+      const response = await fetch('/api/update-style', { 
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
@@ -129,6 +118,7 @@ export default function Home() {
       setCssOnly(data.cssOnly);
       setActiveTab('preview');
       setFloatingInput('');
+      setPreviewKey(prevKey => prevKey + 1);
     } catch (error) {
       console.error('Error:', error);
     } finally {
@@ -277,7 +267,7 @@ export default function Home() {
                       </button>
                     ))}
                   </div>
-                  <PreviewFrame code={outputCode} />
+                  <PreviewFrame code={outputCode} previewSize={previewSize} previewKey={previewKey} />
                 </div>
               )}
             </motion.div>
