@@ -76,8 +76,7 @@ export default function Home() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
           code: inputCode, 
-          designDescription, 
-          previousCss: isGenerated ? cssOnly : ''
+          designDescription
         }),
       });
 
@@ -88,7 +87,7 @@ export default function Home() {
       setActiveTab('preview');
       setIsGenerated(true);
       setShowFloatingInput(false);
-      setFloatingInput(''); // Clear the floating input after submission
+      setFloatingInput('');
     } catch (error) {
       console.error('Error:', error);
     } finally {
@@ -107,18 +106,34 @@ export default function Home() {
     setChangeSummary('');
   };
 
-  const debouncedSetDesignDescription = useCallback(
-    debounce((value) => setDesignDescription(value), 300),
-    []
-  );
-
   const handleFloatingInputChange = (e) => {
     setFloatingInput(e.target.value);
   };
 
-  const handleFloatingSubmit = () => {
-    setDesignDescription(floatingInput);
-    handleSubmit();
+  const handleFloatingSubmit = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch('/api/update-style', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          code: inputCode, 
+          designDescription: floatingInput,
+          previousCss: cssOnly
+        }),
+      });
+
+      const data = await response.json();
+      
+      setOutputCode(data.styledCode);
+      setCssOnly(data.cssOnly);
+      setActiveTab('preview');
+      setFloatingInput('');
+    } catch (error) {
+      console.error('Error:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

@@ -7,7 +7,7 @@ const openai = new OpenAI({
 
 export async function POST(req) {
   try {
-    const { code, designDescription, previousCss } = await req.json();
+    const { code, designDescription } = await req.json();
 
     const messages = [
       {
@@ -21,8 +21,8 @@ export async function POST(req) {
         6. Include necessary media queries for different screen sizes
         7. Add any necessary vendor prefixes for broader browser support
         8. Incorporate the user's design description into the styling
-        9. Response should start with <style> and end with </style>
-        10. Do not include any explanation or markdown formatting like Three backticks css and backticks in the bottom - just the CSS code`
+        9. Provide only the CSS code without any surrounding tags, backticks, or language identifiers
+        10. Do not include any explanation or markdown formatting - just the pure CSS code`
       },
       {
         role: "user",
@@ -30,27 +30,21 @@ export async function POST(req) {
       }
     ];
 
-    if (previousCss) {
-      messages.push({
-        role: "assistant",
-        content: previousCss
-      });
-      messages.push({
-        role: "user",
-        content: `Please update the CSS based on the following request: ${designDescription}`
-      });
-    }
-
     const completion = await openai.chat.completions.create({
-      model: "gpt-4o",
+      model: "gpt-4",
       messages: messages,
     });
 
-    const styleContent = completion.choices[0].message.content;
+    let styleContent = completion.choices[0].message.content.trim();
     
+    // Remove <style> tags if present
+    styleContent = styleContent.replace(/<\/?style>/g, '').trim();
+
     // Combine the original HTML with the styled CSS
     const styledCode = `
+      <style>
       ${styleContent}
+      </style>
       ${code}
     `;
 
