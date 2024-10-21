@@ -131,7 +131,7 @@ export default function Home() {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12 pt-8">
           <div className="flex items-center justify-center mb-6">
-            <Code2 className="w-16 h-16 text-blue-600 mr-4" />
+            <Code2 className="w-16 h-16 text-black-600 mr-4" />
             <h1 className="text-5xl font-bold text-gray-800">
               AI Code Styler
             </h1>
@@ -156,7 +156,7 @@ export default function Home() {
                   <label htmlFor="inputCode" className="block text-sm font-medium text-gray-700 mb-2">Input HTML</label>
                   <textarea
                     id="inputCode"
-                    className="w-full h-[200px] p-4 rounded-lg bg-gray-50 border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition duration-200 font-mono text-sm resize-none"
+                    className="w-full h-[200px] p-4 rounded-lg bg-gray-50 border border-gray-300 focus:ring-2 transition duration-200 font-mono text-sm resize-none"
                     value={inputCode}
                     onChange={(e) => setInputCode(e.target.value)}
                     placeholder="Paste your HTML code here..."
@@ -166,7 +166,7 @@ export default function Home() {
                   <label htmlFor="designDescription" className="block text-sm font-medium text-gray-700 mb-2">Design Description</label>
                   <textarea
                     id="designDescription"
-                    className="w-full h-[100px] p-4 rounded-lg bg-gray-50 border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition duration-200 text-sm resize-none"
+                    className="w-full h-[100px] p-4 rounded-lg bg-gray-50 border border-gray-300 focus:ring-2 transition duration-200 text-sm resize-none"
                     value={designDescription}
                     onChange={(e) => setDesignDescription(e.target.value)}
                     placeholder="Describe your desired design (e.g., color scheme, layout preferences, etc.)..."
@@ -175,7 +175,7 @@ export default function Home() {
                 <button
                   type="submit"
                   disabled={loading || !inputCode}
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md transition duration-200 flex items-center justify-center space-x-3 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full bg-black hover:bg-gray-600 text-white px-6 py-3 rounded-md transition duration-200 flex items-center justify-center space-x-3 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {loading ? (
                     <>
@@ -205,13 +205,13 @@ export default function Home() {
                   <div className="flex">
                     <button
                       onClick={() => setActiveTab('css')}
-                      className={`py-2 px-4 font-medium ${activeTab === 'css' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-500 hover:text-gray-700'}`}
+                      className={`py-2 px-4 font-medium ${activeTab === 'css' ? 'text-gray-600 border-b-2 border-gray-600' : 'text-gray-500 hover:text-gray-700'}`}
                     >
                       Generated CSS
                     </button>
                     <button
                       onClick={() => setActiveTab('preview')}
-                      className={`py-2 px-4 font-medium ${activeTab === 'preview' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-500 hover:text-gray-700'}`}
+                      className={`py-2 px-4 font-medium ${activeTab === 'preview' ? 'text-gray-600 border-b-2 border-gray-600' : 'text-gray-500 hover:text-gray-700'}`}
                     >
                       Preview
                     </button>
@@ -236,7 +236,7 @@ export default function Home() {
                     </div>
                     <button
                       onClick={() => navigator.clipboard.writeText(cssOnly)}
-                      className="absolute top-4 right-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm transition duration-200 flex items-center space-x-2"
+                      className="absolute top-4 right-4 bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-md text-sm transition duration-200 flex items-center space-x-2"
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
@@ -287,7 +287,7 @@ export default function Home() {
             <div className="bg-white rounded-lg shadow-lg p-4 flex items-center space-x-4 border-black">
               <input
                 type="text"
-                className="flex-grow p-2 rounded-md border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition duration-200"
+                className="flex-grow p-2 rounded-md border border-gray-300 transition duration-200"
                 placeholder="Describe additional changes..."
                 value={floatingInput}
                 onChange={handleFloatingInputChange}
@@ -295,7 +295,7 @@ export default function Home() {
               <button
                 onClick={handleFloatingSubmit}
                 disabled={loading}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition duration-200 flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
+                className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-md transition duration-200 flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
               >
                 {loading ? (
                   <>
