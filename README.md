@@ -75,9 +75,9 @@ You should now see the AI CSS generator application running with Next.js.
 
 ## Screenshots
 
-![Screenshot 1](/Screenshot%20(109).png)
-![Screenshot 2](/Screenshot%20(112).png)
-![Screenshot 3](/Screenshot%20(113).png)
+![Screenshot 1](/Screenshot(109).png)
+![Screenshot 2](/Screenshot(112).png)
+![Screenshot 3](/Screenshot(113).png)
 
 
 ## How to use the application
