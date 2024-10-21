@@ -156,7 +156,7 @@ export default function Home() {
                   <label htmlFor="inputCode" className="block text-sm font-medium text-gray-700 mb-2">Input HTML</label>
                   <textarea
                     id="inputCode"
-                    className="w-full h-[200px] p-4 rounded-lg bg-gray-50 border border-gray-300 focus:ring-2 transition duration-200 font-mono text-sm resize-none"
+                    className="w-full h-[200px] p-4 rounded-lg bg-gray-50 border border-gray-300 transition duration-200 font-mono text-sm resize-none"
                     value={inputCode}
                     onChange={(e) => setInputCode(e.target.value)}
                     placeholder="Paste your HTML code here..."
@@ -166,7 +166,7 @@ export default function Home() {
                   <label htmlFor="designDescription" className="block text-sm font-medium text-gray-700 mb-2">Design Description</label>
                   <textarea
                     id="designDescription"
-                    className="w-full h-[100px] p-4 rounded-lg bg-gray-50 border border-gray-300 focus:ring-2 transition duration-200 text-sm resize-none"
+                    className="w-full h-[100px] p-4 rounded-lg bg-gray-50 border border-gray-300 transition duration-200 text-sm resize-none"
                     value={designDescription}
                     onChange={(e) => setDesignDescription(e.target.value)}
                     placeholder="Describe your desired design (e.g., color scheme, layout preferences, etc.)..."
