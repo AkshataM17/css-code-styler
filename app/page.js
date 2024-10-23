@@ -3,13 +3,6 @@ import Link from "next/link"
 export default function Home() {
   return (
     <main>
-      <nav className="bg-black text-white p-4">
-        <div className="container mx-auto flex justify-between items-center">
-          <h1 className="text-2xl font-bold">CSS Style Generator</h1>
-          
-        </div>
-      </nav>
-
       <section className="container mx-auto py-20 text-center">
         <h2 className="text-5xl font-bold mb-6">Style your Websites</h2>
         <p className="text-xl text-gray-700 mb-8">Style your old, boring web pages into something cool using our AI CSS Style Generator.</p>
